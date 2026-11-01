@@ -1,0 +1,6 @@
+{
+  "name": "@atem-sandbox/atem-protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module"
+}

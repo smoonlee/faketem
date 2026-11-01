@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "server": {
+    "host": "127.0.0.1",
+    "atemPort": 9910,
+    "webPort": 3000
+  },
+  "device": {
+    "name": "ATEM Sandbox",
+    "model": "ATEM Mini Extreme ISO (Gen 1)",
+    "modelId": "atem-mini-extreme-iso",
+    "videoMode": "1080p50"
+  },
+  "transition": {
+    "type": "mix",
+    "rateFrames": 25
+  },
+  "initialState": {
+    "program": 1,
+    "preview": 2
+  },
+  "inputs": [
+    {
+      "id": 1,
+      "longName": "Camera 1",
+      "shortName": "CAM1",
+      "background": "#B91C1C",
+      "foreground": "#FFFFFF"
+    },
+    {
+      "id": 2,
+      "longName": "Camera 2",
+      "shortName": "CAM2",
+      "background": "#15803D",
+      "foreground": "#FFFFFF"
+    },
+    {
+      "id": 3,
+      "longName": "Camera 3",
+      "shortName": "CAM3",
+      "background": "#1D4ED8",
+      "foreground": "#FFFFFF"
+    },
+    {
+      "id": 4,
+      "longName": "Camera 4",
+      "shortName": "CAM4",
+      "background": "#7E22CE",
+      "foreground": "#FFFFFF"
+    },
+    {
+      "id": 5,
+      "longName": "Camera 5",
+      "shortName": "CAM5",
+      "background": "#A16207",
+      "foreground": "#FFFFFF"
+    },
+    {
+      "id": 6,
+      "longName": "Camera 6",
+      "shortName": "CAM6",
+      "background": "#0F766E",
+      "foreground": "#FFFFFF"
+    },
+    {
+      "id": 7,
+      "longName": "Camera 7",
+      "shortName": "CAM7",
+      "background": "#BE123C",
+      "foreground": "#FFFFFF"
+    },
+    {
+      "id": 8,
+      "longName": "Camera 8",
+      "shortName": "CAM8",
+      "background": "#334155",
+      "foreground": "#FFFFFF"
+    }
+  ],
+  "mediaPool": {
+    "stills": [
+      {
+        "slot": 1,
+        "type": "generated",
+        "name": "Media Player #1",
+        "background": "#0047AB",
+        "foreground": "#FFFFFF",
+        "text": "Media Player #1"
+      },
+      {
+        "slot": 2,
+        "type": "generated",
+        "name": "Media Player #2",
+        "background": "#1F2937",
+        "foreground": "#FFFFFF",
+        "text": "Media Player #2"
+      }
+    ]
+  },
+  "mediaPlayers": {
+    "1": {
+      "name": "Media Player 1",
+      "type": "still",
+      "slot": 1
+    },
+    "2": {
+      "name": "Media Player 2",
+      "type": "still",
+      "slot": 2
+    }
+  },
+  "auxiliaries": {
+    "1": 1,
+    "2": 1,
+    "3": 1,
+    "4": 1
+  },
+  "keyers": {
+    "upstream": {
+      "1": false,
+      "2": false,
+      "3": false,
+      "4": false
+    },
+    "upstreamSettings": {
+      "1": {
+        "mixEffectKeyType": 0,
+        "flyEnabled": false,
+        "fillSource": 1,
+        "cutSource": 2
+      },
+      "2": {
+        "mixEffectKeyType": 0,
+        "flyEnabled": false,
+        "fillSource": 1,
+        "cutSource": 2
+      },
+      "3": {
+        "mixEffectKeyType": 0,
+        "flyEnabled": false,
+        "fillSource": 1,
+        "cutSource": 2
+      },
+      "4": {
+        "mixEffectKeyType": 0,
+        "flyEnabled": false,
+        "fillSource": 1,
+        "cutSource": 2
+      }
+    },
+    "downstream": {
+      "1": {
+        "onAir": false,
+        "tie": false,
+        "rate": 25
+      },
+      "2": {
+        "onAir": false,
+        "tie": false,
+        "rate": 25
+      }
+    }
+  }
+}

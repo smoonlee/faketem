@@ -1,0 +1,14 @@
+.git
+.github
+.vscode
+node_modules
+**/node_modules
+**/dist
+dist
+coverage
+release
+logs
+media
+configs
+config.json
+*.log

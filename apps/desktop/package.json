@@ -1,0 +1,7 @@
+{
+  "name": "atem-sandbox-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Desktop host for ATEM Sandbox",
+  "main": "dist/main.cjs"
+}

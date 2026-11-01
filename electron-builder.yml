@@ -1,0 +1,30 @@
+appId: com.atemsandbox.desktop
+productName: ATEM Sandbox
+artifactName: ATEM_Sandbox_${version}_${os}_${arch}.${ext}
+directories:
+  app: apps/desktop
+  output: release/desktop
+files:
+  - package.json
+  - dist/**/*
+extraResources:
+  - from: apps/web/dist
+    to: web
+npmRebuild: false
+win:
+  executableName: ATEM_Sandbox
+  artifactName: ATEM_Sandbox_${version}_win_${arch}_portable.${ext}
+  target:
+    - nsis
+    - portable
+    - zip
+nsis:
+  artifactName: ATEM_Sandbox_${version}_win_${arch}_installer.${ext}
+portable:
+  artifactName: ATEM_Sandbox_${version}_win_${arch}_portable.${ext}
+mac:
+  target:
+    - dmg
+linux:
+  target:
+    - AppImage

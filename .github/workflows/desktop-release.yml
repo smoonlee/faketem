@@ -1,0 +1,67 @@
+name: Desktop release
+on:
+  push:
+    tags: ['desktop-v*']
+permissions:
+  contents: read
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+  desktop:
+    needs: verify
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            args: --win --x64
+            artifact: windows
+          - os: macos-latest
+            args: --mac --x64 --arm64
+            artifact: macos
+          - os: ubuntu-latest
+            args: --linux --x64
+            artifact: linux
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Verify release version
+        run: node -e "const root=require('./package.json').version; const desktop=require('./apps/desktop/package.json').version; if (!/^desktop-v[0-9]+[.][0-9]+[.][0-9]+$/.test(process.env.GITHUB_REF_NAME) || process.env.GITHUB_REF_NAME !== 'desktop-v'+root || root !== desktop) process.exit(1)"
+      - run: npm ci
+      - run: npm run build:desktop
+      - run: npx electron-builder --config electron-builder.yml ${{ matrix.args }} --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: desktop-${{ matrix.artifact }}
+          path: |
+            release/desktop/*.exe
+            release/desktop/*.zip
+            release/desktop/*.dmg
+            release/desktop/*.AppImage
+          if-no-files-found: error
+  release:
+    needs: desktop
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          pattern: desktop-*
+          path: artifacts
+          merge-multiple: true
+      - name: Publish desktop release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if gh release view "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" artifacts/* --repo "$GITHUB_REPOSITORY" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" artifacts/* --repo "$GITHUB_REPOSITORY" --verify-tag --title "Desktop_${GITHUB_REF_NAME#desktop-v}" --generate-notes
+          fi
